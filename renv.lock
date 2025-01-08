@@ -231,7 +231,7 @@
     },
     "Rcpp": {
       "Package": "Rcpp",
-      "Version": "1.0.13",
+      "Version": "1.0.13-1",
       "Source": "Repository",
       "Repository": "CRAN"
     },
@@ -297,7 +297,7 @@
     },
     "SqlRender": {
       "Package": "SqlRender",
-      "Version": "1.19.0",
+      "Version": "1.19.1",
       "Source": "Repository",
       "Repository": "CRAN"
     },
