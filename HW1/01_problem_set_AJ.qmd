@@ -173,8 +173,7 @@ disconnect(connection)
 
 ```{r}
 # Using DuckDB
-# absoluteFileName <- file.path(getwd(), "data", "synthetic.duckdb")
-absoluteFileName <- "C:/Users/ajaco/OneDrive/Documents/UCLA/BIOSTATS_218/biostat-218-2025-winter/data/synthetic.duckdb" 
+absoluteFileName <- file.path(getwd(), "../data", "synthetic.duckdb")
 
 connection <- connect(dbms = "duckdb", server = absoluteFileName)
 
