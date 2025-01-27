@@ -165,11 +165,38 @@ disconnect(connection)
 
 9.  What are the MedDRA preferred terms that are equivalent to the standard concept for "Gastrointestinal hemorrhage"?
 
+- The MedDRA preferred terms that are equivalent to the standard concept for "Gastrointestinal hemorrhage" are `Gastrointestinal hemorrhage` and `Gastrointestinal haemorrhage`.
 
 ## Advanced SQL
 
 10. What is the minimum, maximum, and mean length (in days) of observation from the `synthetic` dataset? (Hint: you can use the `DATEDIFF` function to compute the time between two dates.)
 
+```{r}
+# Using DuckDB
+# absoluteFileName <- file.path(getwd(), "data", "synthetic.duckdb")
+absoluteFileName <- "C:/Users/ajaco/OneDrive/Documents/UCLA/BIOSTATS_218/biostat-218-2025-winter/data/synthetic.duckdb" 
+
+connection <- connect(dbms = "duckdb", server = absoluteFileName)
+
+# Get list of tables
+# getTableNames(connection)
+
+querySql(connection = connection,
+         sql = "SELECT MIN(OBSERVATION_PERIOD_START_DATE) AS MIN_OBSERVATION_PERIOD_START_DATE
+                     , MAX(OBSERVATION_PERIOD_END_DATE) AS MAX_OBSERVATION_PERIOD_END_DATE
+                     , AVG(DATEDIFF('day', OBSERVATION_PERIOD_START_DATE, OBSERVATION_PERIOD_END_DATE)) AS AVG_OBSERVATION_DAYS
+                FROM OBSERVATION_PERIOD;")
+```
+
+
 11. How many people have at least one prescription of celecoxib from the `synthetic` dataset? (Note: there’s an easy way to do this, using `DRUG_ERA`, and a harder way using `DRUG_EXPOSURE` and `CONCEPT_ANCESTOR`. Can you do both?)
+
+```{r}
+querySql(connection = connection,
+         sql = "SELECT MIN(OBSERVATION_DATETIME) AS MIN_OBSERVATION_DATETIME
+                     , MAX(OBSERVATION_DATETIME) AS MAX_OBSERVATION_DATETIME
+                     , AVG(DATEDIFF('day', OBSERVATION_DATETIME, OBSERVATION_DATETIME)) AS AVG_OBSERVATION_DAYS
+                FROM observation;")
+```
 
 12. During which period in time (calender start and end date) did people start a celecoxib prescription from the `synthetic` dataset?
