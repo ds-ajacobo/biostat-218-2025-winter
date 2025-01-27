@@ -66,6 +66,27 @@ knitr:
 | Column name                 | Value               | Explanation |
 |------------------------|-------------------|---------------------------|
 
+
+```{r}
+library(DatabaseConnector)
+
+# Using Eunomia -- will download with each R session
+connection <- connect(Eunomia::getEunomiaConnectionDetails())
+
+# Get list of tables
+getTableNames(connection,databaseSchema = 'main')
+
+# querySql(connection = connection,
+#          sql = "
+#          SELECT * 
+#          FROM concept 
+#          WHERE CONCEPT_ID = 192671;
+#          ")
+
+disconnect(connection)
+```
+
+
 4.  Using SQL and R, retrieve all records of the condition "Gastrointestinal hemorrhage" (with concept ID [192671](http://athena.ohdsi.org/search-terms/terms/192671)) from the `Eunomia` dataset.
 
 ```{r}
@@ -102,21 +123,48 @@ querySql(connection = connection,
          sql = "
          SELECT * 
          FROM concept 
-         WHERE CONCEPT_ID = 192671;
+         WHERE CONCEPT_CODE = 'K92.2';
          ")
 
 disconnect(connection)
 ```
 
-6.  Using SQL and R, retrieve the observation period of the person with `PERSON_ID` 61 from the \`Eunomia dataset.
+6.  Using SQL and R, retrieve the observation period of the person with `PERSON_ID` 61 from the `Eunomia` dataset.
+
+```{r}
+library(DatabaseConnector)
+
+# Using Eunomia -- will download with each R session
+connection <- connect(Eunomia::getEunomiaConnectionDetails())
+
+# Get list of tables
+# getTableNames(connection,databaseSchema = 'main')
+
+querySql(connection = connection,
+         sql = "
+         SELECT * 
+         FROM observation_period 
+         WHERE PERSON_ID = 61;
+         ")
+
+disconnect(connection)
+```
+
 
 ## Standardize vocabularies
 
 7.  What is the standard concept ID for "Gastrointestinal hemorrhage"?
 
+- The standard concept ID for "Gastrointestinal hemorrhage" is `192671`.
+
+
 8.  Which ICD-10CM codes map to the standard concept for "Gastrointestinal hemorrhage"? Which ICD-9CM codes map to this Standard Concept?
 
+- The ICD-10CM codes that map to the standard concept for "Gastrointestinal hemorrhage" are `K92.2` and `K92.9`. The ICD-9CM codes that map to this standard concept are `578.9` and `578.0`.
+
+
 9.  What are the MedDRA preferred terms that are equivalent to the standard concept for "Gastrointestinal hemorrhage"?
+
 
 ## Advanced SQL
 
