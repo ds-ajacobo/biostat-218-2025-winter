@@ -24,13 +24,74 @@ knitr:
 
 ## OMOP CDM
 
-1. John is an African American man born on August 4, 1974.  Define an entry in the `PERSON` table that encodes this information.
+1.  John is an African American man born on August 4, 1974. Define an entry in the `PERSON` table that encodes this information.
 
-2. John enrolled in his current insurance on January 1st, 2015. The data from his insurance database were extracted on July 1st, 2019. Define an entry in the `OBSERVATION_PERIOD` table that encodes this information.
+| Column name                 | Value               | Explanation                                                                             |
+|------------------------|-------------------|---------------------------|
+| PERSON_ID                   | 1                   | Unique identifier                                                                       |
+| GENDER_CONCEPT_ID           | 8507                | Value for 8507 refers to “Male".                                                        |
+| YEAR_OF_BIRTH               | 1974                | Year of birth                                                                           |
+| MONTH_OF_BIRTH              | 8                   | Month of birth                                                                          |
+| DAY_OF_BIRTH                | 4                   | Day of birth                                                                            |
+| BIRTH_DATETIME              | 1974-08-04 00:00:00 | When time of birth is is unknown value will default to midnight.                        |
+| RACE_CONCEPT_ID             | 8516                | Value for 8516 refers to “Black or African American”.                                   |
+| ETHNICITY_CONCEPT_ID        | 38003564            | Value for 38003564 refers to “Not hispanic”.                                            |
+| LOCATION_ID                 |                     | Address of the person is not known                                                      |
+| PROVIDER_ID                 |                     | PCP is not known                                                                        |
+| CARE_SITE_ID                |                     | PCP site is not known                                                                   |
+| PERSON_SOURCE_VALUE         |                     | Value is not known                                                                      |
+| GENDER_SOURCE_VALUE         | Male                | Text description of GENDER_CONCEPT_ID                                                   |
+| GENDER_SOURCE_CONCEPT_ID    | 0                   | GENDER_CONCEPT_ID from source data. When this is not known, value will default to 0.    |
+| RACE_SOURCE_VALUE           | African American    | Text description of RACE_CONCEPT_ID                                                     |
+| RACE_SOURCE_CONCEPT_ID      | 0                   | RACE_CONCEPT_ID from source data. When this is not known, value will default to 0.      |
+| ETHNICITY_SOURCE_VALUE      | Not hispanic        | Text description of ETHNICITY_CONCEPT_ID.                                               |
+| ETHNICITY_SOURCE_CONCEPT_ID | 0                   | EHTNICITY_CONCEPT_ID from source data. When this is not known, value will default to 0. |
 
-3. John was prescribed a 30-day supply of Ibuprofen 200 MG Oral tablets (NDC code: 76168009520) on May 1st, 2019. Define an entry in the `DRUG_EXPOSURE` table that encodes this information.
+```{r}
+library(DatabaseConnector)
 
-4. Using SQL and R, retrieve all records of the condition "Gastrointestinal hemorrhage" (with concept ID [192671](http://athena.ohdsi.org/search-terms/terms/192671)) from the `Eunomia` dataset.
+# Using Eunomia -- will download with each R session
+connection <- connect(Eunomia::getEunomiaConnectionDetails())
+
+# Get list of tables
+# getTableNames(connection,databaseSchema = 'main')
+
+querySql(connection = connection,
+         sql = "
+         SELECT * 
+         FROM PERSON 
+         WHERE PERSON_ID = 1;
+         ")
+
+disconnect
+```
+
+2.  John enrolled in his current insurance on January 1st, 2015. The data from his insurance database were extracted on July 1st, 2019. Define an entry in the `OBSERVATION_PERIOD` table that encodes this information.
+
+| PERSON_ID \| OBSERVATION_PERIOD_ID \| OBSERVATION_PERIOD_START_DATE \| OBSERVATION_PERIOD_END_DATE \|
+
+```{r}
+library(DatabaseConnector)
+
+# Using Eunomia -- will download with each R session
+connection <- connect(Eunomia::getEunomiaConnectionDetails())
+
+# Get list of tables
+# getTableNames(connection,databaseSchema = 'main')
+
+querySql(connection = connection,
+         sql = "
+         SELECT * 
+         FROM OBSERVATION_PERIOD 
+         WHERE PERSON_ID = 1;
+         ")
+
+disconnect
+```
+
+3.  John was prescribed a 30-day supply of Ibuprofen 200 MG Oral tablets (NDC code: 76168009520) on May 1st, 2019. Define an entry in the `DRUG_EXPOSURE` table that encodes this information.
+
+4.  Using SQL and R, retrieve all records of the condition "Gastrointestinal hemorrhage" (with concept ID [192671](http://athena.ohdsi.org/search-terms/terms/192671)) from the `Eunomia` dataset.
 
 ```{r}
 library(DatabaseConnector)
@@ -51,7 +112,7 @@ querySql(connection = connection,
 disconnect(connection)
 ```
 
-5. Using SQL and R, retrieve all records of the condition "Gastrointestinal hemorrhage" using source codes. This database uses ICD-10, and the relevant ICD-10 code is "K92.2" from the `Eunomia` dataset.
+5.  Using SQL and R, retrieve all records of the condition "Gastrointestinal hemorrhage" using source codes. This database uses ICD-10, and the relevant ICD-10 code is "K92.2" from the `Eunomia` dataset.
 
 ```{r}
 library(DatabaseConnector)
@@ -72,15 +133,15 @@ querySql(connection = connection,
 disconnect(connection)
 ```
 
-6. Using SQL and R, retrieve the observation period of the person with `PERSON_ID` 61 from the `Eunomia dataset.
+6.  Using SQL and R, retrieve the observation period of the person with `PERSON_ID` 61 from the \`Eunomia dataset.
 
 ## Standardize vocabularies
 
-7. What is the standard concept ID for "Gastrointestinal hemorrhage"?
+7.  What is the standard concept ID for "Gastrointestinal hemorrhage"?
 
-8. Which ICD-10CM codes map to the standard concept for "Gastrointestinal hemorrhage"? Which ICD-9CM codes map to this Standard Concept?
+8.  Which ICD-10CM codes map to the standard concept for "Gastrointestinal hemorrhage"? Which ICD-9CM codes map to this Standard Concept?
 
-9. What are the MedDRA preferred terms that are equivalent to the standard concept for "Gastrointestinal hemorrhage"?
+9.  What are the MedDRA preferred terms that are equivalent to the standard concept for "Gastrointestinal hemorrhage"?
 
 ## Advanced SQL
 
