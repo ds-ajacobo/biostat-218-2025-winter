@@ -47,49 +47,24 @@ knitr:
 | ETHNICITY_SOURCE_VALUE      | Not hispanic        | Text description of ETHNICITY_CONCEPT_ID.                                               |
 | ETHNICITY_SOURCE_CONCEPT_ID | 0                   | EHTNICITY_CONCEPT_ID from source data. When this is not known, value will default to 0. |
 
-```{r}
-library(DatabaseConnector)
-
-# Using Eunomia -- will download with each R session
-connection <- connect(Eunomia::getEunomiaConnectionDetails())
-
-# Get list of tables
-# getTableNames(connection,databaseSchema = 'main')
-
-querySql(connection = connection,
-         sql = "
-         SELECT * 
-         FROM PERSON 
-         WHERE PERSON_ID = 1;
-         ")
-
-disconnect
-```
 
 2.  John enrolled in his current insurance on January 1st, 2015. The data from his insurance database were extracted on July 1st, 2019. Define an entry in the `OBSERVATION_PERIOD` table that encodes this information.
 
-| PERSON_ID \| OBSERVATION_PERIOD_ID \| OBSERVATION_PERIOD_START_DATE \| OBSERVATION_PERIOD_END_DATE \|
+| Column name                 | Value               | Explanation |
+|------------------------|-------------------|---------------------------|
+| OBSERVATION_PERIOD_ID       | 1                   | Unique identifier |
+| PERSON_ID                   | 1                   | Unique identifier |
+| OBSERVATION_PERIOD_START_DATE| 2015-01-01 00:00:00 | Start date of observation period |
+| OBSERVATION_PERIOD_END_DATE  | 2019-07-01 00:00:00 | End date of observation period |
+| PERIOD_TYPE_CONCEPT_ID      | 44814722            | Value for 44814722 refers to “Period while enrolled in insurance”. |
+| PERIOD_TYPE_SOURCE_VALUE    | Period while enrolled in insurance | Text description of PERIOD_TYPE_CONCEPT_ID |
+| PERIOD_TYPE_SOURCE_CONCEPT_ID| 0                  | PERIOD_TYPE_CONCEPT_ID from source data. When this is not known, value will default to 0. |
 
-```{r}
-library(DatabaseConnector)
-
-# Using Eunomia -- will download with each R session
-connection <- connect(Eunomia::getEunomiaConnectionDetails())
-
-# Get list of tables
-# getTableNames(connection,databaseSchema = 'main')
-
-querySql(connection = connection,
-         sql = "
-         SELECT * 
-         FROM OBSERVATION_PERIOD 
-         WHERE PERSON_ID = 1;
-         ")
-
-disconnect
-```
 
 3.  John was prescribed a 30-day supply of Ibuprofen 200 MG Oral tablets (NDC code: 76168009520) on May 1st, 2019. Define an entry in the `DRUG_EXPOSURE` table that encodes this information.
+
+| Column name                 | Value               | Explanation |
+|------------------------|-------------------|---------------------------|
 
 4.  Using SQL and R, retrieve all records of the condition "Gastrointestinal hemorrhage" (with concept ID [192671](http://athena.ohdsi.org/search-terms/terms/192671)) from the `Eunomia` dataset.
 
