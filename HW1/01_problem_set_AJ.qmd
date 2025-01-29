@@ -192,10 +192,26 @@ querySql(connection = connection,
 
 ```{r}
 querySql(connection = connection,
-         sql = "SELECT MIN(OBSERVATION_DATETIME) AS MIN_OBSERVATION_DATETIME
-                     , MAX(OBSERVATION_DATETIME) AS MAX_OBSERVATION_DATETIME
-                     , AVG(DATEDIFF('day', OBSERVATION_DATETIME, OBSERVATION_DATETIME)) AS AVG_OBSERVATION_DAYS
-                FROM observation;")
+         sql = "SELECT COUNT(DISTINCT PERSON_ID) AS TOTAL_CELECOXIB_PRESCRIPTIONS
+                FROM DRUG_ERA
+                WHERE DRUG_CONCEPT_ID = 1118084;")
+```
+
+
+```{r}
+querySql(connection = connection,
+         sql = "SELECT COUNT(*)
+                FROM DRUG_EXPOSURE a 
+                LEFT JOIN CONCEPT_ANCESTOR b ON a.DRUG_CONCEPT_ID = b.ANCESTOR_CONCEPT_ID
+                WHERE DESCENDANT_CONCEPT_ID = 1118084;")
 ```
 
 12. During which period in time (calender start and end date) did people start a celecoxib prescription from the `synthetic` dataset?
+
+```{r}
+querySql(connection = connection,
+         sql = "SELECT MIN(DRUG_ERA_START_DATE) AS MIN_CELECOXIB_PRESCRIPTION_DATE
+                     , MAX(DRUG_ERA_END_DATE) AS MAX_CELECOXIB_PRESCRIPTION_DATE
+                FROM DRUG_ERA
+                WHERE DRUG_CONCEPT_ID = 1118084;")
+```
