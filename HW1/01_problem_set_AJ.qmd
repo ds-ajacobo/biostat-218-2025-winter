@@ -27,7 +27,7 @@ knitr:
 1.  John is an African American man born on August 4, 1974. Define an entry in the `PERSON` table that encodes this information.
 
 | Column name                 | Value               | Explanation                                                                             |
-|------------------------|-------------------|---------------------------|
+|-------------------------|--------------------|----------------------------|
 | PERSON_ID                   | 1                   | Unique identifier                                                                       |
 | GENDER_CONCEPT_ID           | 8507                | Value for 8507 refers to “Male".                                                        |
 | YEAR_OF_BIRTH               | 1974                | Year of birth                                                                           |
@@ -47,44 +47,45 @@ knitr:
 | ETHNICITY_SOURCE_VALUE      | Not hispanic        | Text description of ETHNICITY_CONCEPT_ID.                                               |
 | ETHNICITY_SOURCE_CONCEPT_ID | 0                   | EHTNICITY_CONCEPT_ID from source data. When this is not known, value will default to 0. |
 
-
 2.  John enrolled in his current insurance on January 1st, 2015. The data from his insurance database were extracted on July 1st, 2019. Define an entry in the `OBSERVATION_PERIOD` table that encodes this information.
 
-| Column name                 | Value               | Explanation |
-|------------------------|-------------------|---------------------------|
-| OBSERVATION_PERIOD_ID       | 1                   | Unique identifier |
-| PERSON_ID                   | 1                   | Unique identifier |
-| OBSERVATION_PERIOD_START_DATE| 2015-01-01 00:00:00 | Start date of observation period |
-| OBSERVATION_PERIOD_END_DATE  | 2019-07-01 00:00:00 | End date of observation period |
-| PERIOD_TYPE_CONCEPT_ID      | 44814722            | Value for 44814722 refers to “Period while enrolled in insurance”. |
-| PERIOD_TYPE_SOURCE_VALUE    | Period while enrolled in insurance | Text description of PERIOD_TYPE_CONCEPT_ID |
-| PERIOD_TYPE_SOURCE_CONCEPT_ID| 0                  | PERIOD_TYPE_CONCEPT_ID from source data. When this is not known, value will default to 0. |
-
+| Column name                   | Value                              | Explanation                                                                               |
+|-------------------------|--------------------|----------------------------|
+| OBSERVATION_PERIOD_ID         | 1                                  | Unique identifier                                                                         |
+| PERSON_ID                     | 1                                  | Unique identifier                                                                         |
+| OBSERVATION_PERIOD_START_DATE | 2015-01-01 00:00:00                | Start date of observation period                                                          |
+| OBSERVATION_PERIOD_END_DATE   | 2019-07-01 00:00:00                | End date of observation period                                                            |
+| PERIOD_TYPE_CONCEPT_ID        | 44814722                           | Value for 44814722 refers to “Period while enrolled in insurance”.                        |
+| PERIOD_TYPE_SOURCE_VALUE      | Period while enrolled in insurance | Text description of PERIOD_TYPE_CONCEPT_ID                                                |
+| PERIOD_TYPE_SOURCE_CONCEPT_ID | 0                                  | PERIOD_TYPE_CONCEPT_ID from source data. When this is not known, value will default to 0. |
 
 3.  John was prescribed a 30-day supply of Ibuprofen 200 MG Oral tablets (NDC code: 76168009520) on May 1st, 2019. Define an entry in the `DRUG_EXPOSURE` table that encodes this information.
 
-| Column name                 | Value               | Explanation |
-|------------------------|-------------------|---------------------------|
-
-
-```{r}
-library(DatabaseConnector)
-
-# Using Eunomia -- will download with each R session
-connection <- connect(Eunomia::getEunomiaConnectionDetails())
-
-# Get list of tables
-getTableNames(connection,databaseSchema = 'main')
-
-# querySql(connection = connection,
-#          sql = "
-#          SELECT * 
-#          FROM concept 
-#          WHERE CONCEPT_ID = 192671;
-#          ")
-
-disconnect(connection)
-```
+| Column name                  | Value                             | Explanation                                                                               |
+|-------------------------|--------------------|----------------------------|
+| DRUG_EXPOSURE_ID             | 1                                 | Unique identifier                                                                         |
+| PERSON_ID                    | 1                                 | Unique identifier                                                                         |
+| DRUG_CONCEPT_ID              | 19078461                          | Value for 19078461 refers to “Ibuprofen 200 MG Oral Tablet”.                              |
+| DRUG_EXPOSURE_START_DATE     | 2019-05-01                        | Start date of drug exposure                                                               |
+| DRUG_EXPOSURE_START_DATETIME | 2019-05-31 00:00:00               | Start date and time of drug exposure                                                      |
+| DRUG_EXPOSURE_END_DATE       | 2019-05-31                        | End date of drug exposure                                                                 |
+| DRUG_EXPOSURE_END_DATETIME   | 2019-05-31 00:00:00               | End date and time of drug exposure                                                        |
+| VERBATIM_END_DATE            | 2019-05-31                        | End date of drug exposure as it appears in the source data                                |
+| DRUG_TYPE_CONCEPT_ID         | 38000175                          | Value for 38000175 refers to “Prescription dispensed in pharmacy”.                        |
+| STOP_REASON                  |                                   | Reason for stopping drug exposure                                                         |
+| REFILLS                      | 0                                 | Number of refills allowed                                                                 |
+| QUANTITY                     | 30                                | Quantity of drug exposure                                                                 |
+| DAYS_SUPPLY                  | 30                                | Days supply of drug exposure                                                              |
+| SIG                          | Take 1 tablet by mouth once daily | Instructions for taking the drug                                                          |
+| ROUTE_CONCEPT_ID             | 0                                 | Value for 0 refers to “Unknown”.                                                          |
+| LOT_NUMBER                   |                                   | Lot number of the drug                                                                    |
+| PROVIDER_ID                  |                                   | Prescribing provider                                                                      |
+| VISIT_OCCURRENCE_ID          |                                   | Visit occurrence                                                                          |
+| VISIT_DETAIL_ID              |                                   | Visit detail                                                                              |
+| DRUG_SOURCE_VALUE            | 76168009520                       | NDC code of the drug                                                                      |
+| DRUG_SOURCE_CONCEPT_ID       | 583945                            | DRUG_CONCEPT_ID from source data. When this is not known, value will default to 0.        |
+| ROUTE_SOURCE_VALUE           | 0                                 | ROUTE_SOURCE_VALUE from source data. When this is not known, value will default to 0.     |
+| DOSE_UNIT_SOURCE_VALUE       | 0                                 | DOSE_UNIT_SOURCE_VALUE from source data. When this is not known, value will default to 0. |
 
 
 4.  Using SQL and R, retrieve all records of the condition "Gastrointestinal hemorrhage" (with concept ID [192671](http://athena.ohdsi.org/search-terms/terms/192671)) from the `Eunomia` dataset.
@@ -150,22 +151,19 @@ querySql(connection = connection,
 disconnect(connection)
 ```
 
-
 ## Standardize vocabularies
 
 7.  What is the standard concept ID for "Gastrointestinal hemorrhage"?
 
-- The standard concept ID for "Gastrointestinal hemorrhage" is `192671`.
-
+-   The standard concept ID for "Gastrointestinal hemorrhage" is `192671`.
 
 8.  Which ICD-10CM codes map to the standard concept for "Gastrointestinal hemorrhage"? Which ICD-9CM codes map to this Standard Concept?
 
-- The ICD-10CM codes that map to the standard concept for "Gastrointestinal hemorrhage" are `K92.2` and `K92.9`. The ICD-9CM codes that map to this standard concept are `578.9` and `578.0`.
-
+-   The ICD-10CM codes that map to the standard concept for "Gastrointestinal hemorrhage" are `K92.2` and `K92.9`. The ICD-9CM codes that map to this standard concept are `578.9` and `578.0`.
 
 9.  What are the MedDRA preferred terms that are equivalent to the standard concept for "Gastrointestinal hemorrhage"?
 
-- The MedDRA preferred terms that are equivalent to the standard concept for "Gastrointestinal hemorrhage" are `Gastrointestinal hemorrhage` and `Gastrointestinal haemorrhage`.
+-   The MedDRA preferred terms that are equivalent to the standard concept for "Gastrointestinal hemorrhage" are `Gastrointestinal hemorrhage` and `Gastrointestinal haemorrhage`.
 
 ## Advanced SQL
 
@@ -187,7 +185,6 @@ querySql(connection = connection,
                 FROM OBSERVATION_PERIOD;")
 ```
 
-
 11. How many people have at least one prescription of celecoxib from the `synthetic` dataset? (Note: there’s an easy way to do this, using `DRUG_ERA`, and a harder way using `DRUG_EXPOSURE` and `CONCEPT_ANCESTOR`. Can you do both?)
 
 ```{r}
@@ -196,7 +193,6 @@ querySql(connection = connection,
                 FROM DRUG_ERA
                 WHERE DRUG_CONCEPT_ID = 1118084;")
 ```
-
 
 ```{r}
 querySql(connection = connection,
