@@ -12,7 +12,7 @@ format:
     toc-location: left
     code-fold: false
 bibliography: "../ohdsi.bib"
-csl: "apa.csl"
+csl: "../apa.csl"
 knitr:
   opts_chunk: 
     fig.align: 'center'
@@ -21,6 +21,12 @@ knitr:
     message: FALSE
     cache: false
 ---
+
+## R Setup
+
+```{r setup, include=FALSE}
+library(DatabaseConnector)
+```
 
 ## OMOP CDM
 
@@ -91,8 +97,6 @@ knitr:
 4.  Using SQL and R, retrieve all records of the condition "Gastrointestinal hemorrhage" (with concept ID [192671](http://athena.ohdsi.org/search-terms/terms/192671)) from the `Eunomia` dataset.
 
 ```{r}
-library(DatabaseConnector)
-
 # Using Eunomia -- will download with each R session
 connection <- connect(Eunomia::getEunomiaConnectionDetails())
 
@@ -175,39 +179,64 @@ absoluteFileName <- file.path(getwd(), "../data", "synthetic.duckdb")
 
 connection <- connect(dbms = "duckdb", server = absoluteFileName)
 
-# Get list of tables
-# getTableNames(connection)
-
 querySql(connection = connection,
          sql = "SELECT MIN(OBSERVATION_PERIOD_START_DATE) AS MIN_OBSERVATION_PERIOD_START_DATE
                      , MAX(OBSERVATION_PERIOD_END_DATE) AS MAX_OBSERVATION_PERIOD_END_DATE
                      , AVG(DATEDIFF('day', OBSERVATION_PERIOD_START_DATE, OBSERVATION_PERIOD_END_DATE)) AS AVG_OBSERVATION_DAYS
                 FROM OBSERVATION_PERIOD;")
+
+disconnect(connection)
 ```
 
 11. How many people have at least one prescription of celecoxib from the `synthetic` dataset? (Note: there’s an easy way to do this, using `DRUG_ERA`, and a harder way using `DRUG_EXPOSURE` and `CONCEPT_ANCESTOR`. Can you do both?)
 
 ```{r}
+# Using DuckDB
+absoluteFileName <- file.path(getwd(), "../data", "synthetic.duckdb")
+
+connection <- connect(dbms = "duckdb", server = absoluteFileName)
+
 querySql(connection = connection,
          sql = "SELECT COUNT(DISTINCT PERSON_ID) AS TOTAL_CELECOXIB_PRESCRIPTIONS
-                FROM DRUG_ERA
-                WHERE DRUG_CONCEPT_ID = 1118084;")
+                FROM DRUG_ERA de
+                LEFT JOIN CONCEPT c ON de.DRUG_CONCEPT_ID = c.CONCEPT_ID
+                WHERE LOWER(c.CONCEPT_NAME) LIKE '%cele%';")
+
+disconnect(connection)
 ```
 
 ```{r}
+# Using DuckDB
+absoluteFileName <- file.path(getwd(), "../data", "synthetic.duckdb")
+
+connection <- connect(dbms = "duckdb", server = absoluteFileName)
+
 querySql(connection = connection,
-         sql = "SELECT COUNT(*)
-                FROM DRUG_EXPOSURE a 
-                LEFT JOIN CONCEPT_ANCESTOR b ON a.DRUG_CONCEPT_ID = b.ANCESTOR_CONCEPT_ID
-                WHERE DESCENDANT_CONCEPT_ID = 1118084;")
+         sql = "SELECT COUNT(DISTINCT PERSON_ID) AS TOTAL_CELECOXIB_PRESCRIPTIONS
+                FROM DRUG_EXPOSURE a
+                LEFT JOIN CONCEPT_ANCESTOR b ON a.DRUG_CONCEPT_ID = b.DESCENDANT_CONCEPT_ID
+                LEFT JOIN CONCEPT c ON b.ANCESTOR_CONCEPT_ID = c.CONCEPT_ID
+                WHERE LOWER(c.CONCEPT_NAME) LIKE '%celecoxib%'
+                ;")
+
+disconnect(connection)
 ```
+
 
 12. During which period in time (calender start and end date) did people start a celecoxib prescription from the `synthetic` dataset?
 
 ```{r}
+# Using DuckDB
+absoluteFileName <- file.path(getwd(), "../data", "synthetic.duckdb")
+
+connection <- connect(dbms = "duckdb", server = absoluteFileName)
+
 querySql(connection = connection,
          sql = "SELECT MIN(DRUG_ERA_START_DATE) AS MIN_CELECOXIB_PRESCRIPTION_DATE
                      , MAX(DRUG_ERA_END_DATE) AS MAX_CELECOXIB_PRESCRIPTION_DATE
                 FROM DRUG_ERA
                 WHERE DRUG_CONCEPT_ID = 1118084;")
+
+disconnect(connection)
 ```
+
