@@ -1,0 +1,18 @@
+---
+title: "Final Project Abstract"
+subtitle: "Due Date: 02/28/2025 at 11:59PM"
+author: "Adolfo Jacobo 006333111"
+format:
+  pdf: default
+  html:
+    toc: true
+editor: visual
+bibliography: citations.bib
+csl: apa-6th-edition.csl  # Optional: Specify citation style
+---
+
+# Abstract
+
+Chronic diseases, like diabetes, are some of the major causes of mortality in the world with the prevalence and cost of these diseases only continues to rise @Hacker2024. The Centers for Disease Control and Prevention (CDC) estimates that in the US alone, 34.2 million people have diabetes, with 29.7 million people diagnosed with the condition and 8.7 million continue to be undiagnosed @CDC_Diabetes_Data. As of 2024, the American College of Physicians has issued new guidelines for first line pharmacologic treatments for type 2 diabetes. The new recommendations are adding sodium–glucose cotransporter-2 (SGLT-2) inhibitor or glucagon-like peptide-1 (GLP-1) agonist to metformin and lifestyle modifications @doi:10.7326/M23-2788. These recommendations may stem from systematic analyses which show glycemic control decline after 2010 with gaps in treatment particularly seen among younger adults, Mexican Americans, and uninsured individuals, who are already at higher risk for diabetes complications @doi:10.1056/NEJMsa2032271. I propose a study on a cohort of patients with type 2 diabetes to compare the efficacy of the recommended treatment strategies: adding either an SGLT-2 inhibitor or a GLP-1 agonist to metformin and lifestyle modifications. A control group will include patients treated solely with metformin and lifestyle interventions. The analysis will be stratified by ethnicity and age groups to assess the differential effectiveness of these interventions over the course of one year.
+
+# References
