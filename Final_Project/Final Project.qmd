@@ -1,0 +1,90 @@
+---
+title: "Final Project Abstract"
+subtitle: "Due Date: 03/21/2025 at 11:59PM"
+author: "Adolfo Jacobo 006333111"
+format:
+  pdf:
+    include-in-header:
+      text: |
+        \usepackage[toc,page]{Appendix}
+  html:
+    toc: true
+editor: visual
+bibliography: citations.bib
+csl: apa-6th-edition.csl  # Optional: Specify citation style
+---
+
+# Abstract
+
+Chronic diseases, like diabetes, are some of the major causes of mortality in the world with the prevalence and cost of these diseases only continues to rise @Hacker2024. The Centers for Disease Control and Prevention (CDC) estimates that in the US alone, 34.2 million people have diabetes, with 29.7 million people diagnosed with the condition and 8.7 million continue to be undiagnosed @CDC_Diabetes_Data. As of 2024, the American College of Physicians has issued new guidelines for first line pharmacologic treatments for type 2 diabetes. The new recommendations are adding sodium–glucose cotransporter-2 (SGLT-2) inhibitor or glucagon-like peptide-1 (GLP-1) agonist to metformin and lifestyle modifications @doi:10.7326/M23-2788. These recommendations may stem from systematic analyses which show glycemic control decline after 2010 with gaps in treatment particularly seen among younger adults, Mexican Americans, and uninsured individuals, who are already at higher risk for diabetes complications @doi:10.1056/NEJMsa2032271.
+
+In a cohort of patients newly diagnosed with type 2 diabetes, we aim to compare the efficacy of the recommended treatment strategies: adding either an SGLT-2 inhibitor or a GLP-1 agonist . A control group will include patients treated solely with metformin and lifestyle interventions, ranging from ages 18 years or older. The analysis will be stratified by ethnicity and age groups to assess the differential effectiveness of these interventions on glycemic control, body weight, cardiovascular risk factors, and cardiovascular outcomes over a one-year follow-up period. Additionally, treatment pathways will be analyzed to identify common sequences of therapy modifications and persistence rates across different patient subgroups.
+
+I decided to use OptumEHR, OptumDod and VAOMOP as the target data sources for patients with no prior metformin exposure to compare glycemic control across unadjusted, propensity score (PS) matching and PS stratification methods and time at risk for intent to treat and on-treatment analyses. The full results shown in the index table.
+
+When comparing the hazard ratios (HR) for GLP1RA vs SGLT2i across data sources, we find that GLP1RA has a higher risk of poor glycemic control compared to SGLT2i.
+
+
+:::: {.tbl-cap}
+| Data Source | Unadjusted HR | PS Matching HR | PS Stratification HR | 
+|--------------|--------------|--------------|--------------|
+| OptumEHR | 1.30 (1.19-1.43) | 1.34 (1.16-1.54) | 1.21 (1.09-1.34) | 
+| OptumDod | 1.28 (1.18-1.38) | 1.24 (1.10-1.38) | 1.27 (1.18-1.38) | 
+| VAOMOP | 1.38 (1.27-1.50) | 1.35 (1.19-1.53) | 1.36 (1.23-1.49) | 
+**Table 1. Hazard Ratios for GLP1RA vs. SGLT2i Across Data Sources**
+::::
+
+When adjusting for confounders, the HRs for GLP1RA vs SGLT2i are reduced, but GLP1RA still shows a higher risk of poor glycemic control compared to SGLT2i. The PS matching method shows the greatest reduction in HRs, suggesting that this method is the most effective at reducing bias. The PS stratification method shows the lowest HRs, indicating that some patients switching treatments experience improved glycemic control.
+
+:::: {.tbl-cap}
+**Table 2. Comparison of HR Ranges for On-Treatment (OT) vs. Intent-to-Treat (ITT) Analysis**
+::::
+
+| Method | HR Range (OT) | HR Range (ITT) | 
+|----------------|----------------|----------------|
+| Unadjusted | 1.28 - 1.38 | 1.17 - 1.20 | 
+| PS Matching | 1.24 - 1.35 | 1.14 - 1.23 | 
+| PS Stratification | 1.21 - 1.36 | 1.08 - 1.20 |
+
+
+# References
+
+::: {#refs}
+:::
+
+
+# Appendix
+
+```{=latex}
+\begin{table}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|l|l|c|c|c|c|c|c|c|c|}
+\hline
+Analysis & Data source & HR & LB & UB & P & CalHR & CalLB & CalUB & CalP \\
+\hline
+Unadjusted, on-treatment1 & OptumEHR & 1.30 & 1.19 & 1.43 & 0.00 & 1.29 & 1.17 & 1.43 & 0.00 \\
+Unadjusted, on-treatment1 & OptumDod & 1.28 & 1.18 & 1.38 & 0.00 & 1.34 & 0.75 & 2.41 & 0.32 \\
+Unadjusted, on-treatment1 & VAOMOP & 1.38 & 1.27 & 1.50 & 0.00 & 1.37 & 1.04 & 1.80 & 0.04 \\
+PS matching, on-treatment1 & OptumEHR & 1.34 & 1.16 & 1.54 & 0.00 & 1.46 & 1.26 & 1.69 & 0.00 \\
+PS matching, on-treatment1 & OptumDod & 1.24 & 1.10 & 1.38 & 0.00 & 1.35 & 0.65 & 2.81 & 0.42 \\
+PS matching, on-treatment1 & VAOMOP & 1.35 & 1.19 & 1.53 & 0.00 & 1.27 & 1.11 & 1.45 & 0.00 \\
+PS stratification, on-treatment1 & OptumEHR & 1.21 & 1.09 & 1.34 & 0.00 & 1.27 & 1.14 & 1.42 & 0.00 \\
+PS stratification, on-treatment1 & OptumDod & 1.27 & 1.18 & 1.38 & 0.00 & 1.34 & 0.75 & 2.42 & 0.32 \\
+PS stratification, on-treatment1 & VAOMOP & 1.36 & 1.23 & 1.49 & 0.00 & 1.32 & 1.20 & 1.46 & 0.00 \\
+Unadjusted, intent-to-treat & OptumEHR & 1.17 & 1.11 & 1.24 & 0.00 & 1.06 & 0.76 & 1.46 & 0.74 \\
+Unadjusted, intent-to-treat & OptumDod & 1.20 & 1.13 & 1.27 & 0.00 & 1.22 & 0.57 & 2.64 & 0.60 \\
+Unadjusted, intent-to-treat & VAOMOP & 1.19 & 1.11 & 1.26 & 0.00 & 1.16 & 0.84 & 1.60 & 0.39 \\
+PS matching, intent-to-treat & OptumEHR & 1.14 & 1.05 & 1.23 & 0.00 & 1.16 & 1.07 & 1.26 & 0.00 \\
+PS matching, intent-to-treat & OptumDod & 1.22 & 1.13 & 1.31 & 0.00 & 1.31 & 0.59 & 2.87 & 0.51 \\
+PS matching, intent-to-treat & VAOMOP & 1.23 & 1.13 & 1.35 & 0.00 & 1.17 & 1.07 & 1.29 & 0.00 \\
+PS stratification, intent-to-treat & OptumEHR & 1.08 & 1.02 & 1.15 & 0.01 & 1.10 & 1.02 & 1.17 & 0.03 \\
+PS stratification, intent-to-treat & OptumDod & 1.20 & 1.13 & 1.27 & 0.00 & 1.22 & 0.56 & 2.65 & 0.61 \\
+PS stratification, intent-to-treat & VAOMOP & 1.20 & 1.11 & 1.29 & 0.00 & 1.15 & 1.06 & 1.24 & 0.00 \\
+\hline
+\end{tabular}%
+}
+\caption{Hazard Ratios for Various Treatment Groups}
+\label{tab:hazard_ratios}
+\end{table}
+```
