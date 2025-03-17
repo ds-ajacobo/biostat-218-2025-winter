@@ -18,44 +18,62 @@ csl: apa-6th-edition.csl  # Optional: Specify citation style
 
 Chronic diseases, like diabetes, are some of the major causes of mortality in the world with the prevalence and cost of these diseases only continues to rise @Hacker2024. The Centers for Disease Control and Prevention (CDC) estimates that in the US alone, 34.2 million people have diabetes, with 29.7 million people diagnosed with the condition and 8.7 million continue to be undiagnosed @CDC_Diabetes_Data. As of 2024, the American College of Physicians has issued new guidelines for first line pharmacologic treatments for type 2 diabetes. The new recommendations are adding sodium–glucose cotransporter-2 (SGLT-2) inhibitor or glucagon-like peptide-1 (GLP-1) agonist to metformin and lifestyle modifications @doi:10.7326/M23-2788. These recommendations may stem from systematic analyses which show glycemic control decline after 2010 with gaps in treatment particularly seen among younger adults, Mexican Americans, and uninsured individuals, who are already at higher risk for diabetes complications @doi:10.1056/NEJMsa2032271.
 
-In a cohort of patients newly diagnosed with type 2 diabetes, we aim to compare the efficacy of the recommended treatment strategies: adding either an SGLT-2 inhibitor or a GLP-1 agonist . A control group will include patients treated solely with metformin and lifestyle interventions, ranging from ages 18 years or older. The analysis will be stratified by ethnicity and age groups to assess the differential effectiveness of these interventions on glycemic control, body weight, cardiovascular risk factors, and cardiovascular outcomes over a one-year follow-up period. Additionally, treatment pathways will be analyzed to identify common sequences of therapy modifications and persistence rates across different patient subgroups.
+In a cohort of patients newly diagnosed with type 2 diabetes, we aim to compare the efficacy of the recommended treatment strategies: adding either an SGLT-2 inhibitor or a GLP-1 agonist. ~~A control group will include patients treated solely with metformin and lifestyle interventions, ranging from ages 18 years or older.~~ The analysis will be stratified by ethnicity and age groups to assess the differential effectiveness of these interventions on glycemic control, body weight, cardiovascular risk factors, and cardiovascular outcomes over a one-year follow-up period. ~~Additionally, treatment pathways will be analyzed to identify common sequences of therapy modifications and persistence rates across different patient subgroups.~~
 
-I decided to use OptumEHR, OptumDod and VAOMOP as the target data sources for patients with no prior metformin exposure to compare glycemic control across unadjusted, propensity score (PS) matching and PS stratification methods and time at risk for intent to treat and on-treatment analyses. The full results shown in the index table.
+# Introduction
+
+In order to investigate the efficacy of adding either an SGLT-2 inhibitor or a GLP-1 agonist as a treatment course for patients with diabetes type 2, we will use the **LEGEND-T2DM Class Sensitivity Evidence Explorer** created during the Large-scale evidence generation and evaluation across a network of databases for type 2 diabetes mellitus (LEGEND-T2DM): a protocol for a series of multinational, real-world comparative cardiovascular effectiveness and safety studies @article. The aim of this study is "determine real-world comparative effectiveness and safety of traditionally second-line Type 2 diabetes mellitus (T2DM) agents using health information encompassing millions of patients with T2DM, with a focus on individuals at moderate cardiovascular risk and other key subgroups." They used the comparators of:
+
+-   SGLT2 inhibitors: canagliflozin, dapagliflozin, empagliflozin, ertugliflozin
+-   GLP1 receptor agonists: albiglutide, dulaglutide, exenatide, liraglutide, lixisenatide, semaglutide
+-   DPP4 inhibitors: alogliptin, linagliptin, saxagliptin, sitagliptin, vildagliptin
+-   Sulfonylureas: chlorpropamide, glimepiride, glipizide, gliquidone, glyburide, tolazamide, tolbutamide
+
+We will focus on the SGLT2 inhibitors and GLP1 receptor agonists comparators with an outcome of glycemic control, which is defined as the proportion of patients with HbA1c < 7% or greater than 53 millimole per mole. I decided to use OptumEHR, OptumDod and VAOMOP as the target data sources for patients with no prior metformin exposure to compare glycemic control across unadjusted, propensity score (PS) matching and PS stratification methods and time at risk for intent to treat and on-treatment analyses. The full results shown in the index table.
 
 When comparing the hazard ratios (HR) for GLP1RA vs SGLT2i across data sources, we find that GLP1RA has a higher risk of poor glycemic control compared to SGLT2i.
 
-
-:::: {.tbl-cap}
-| Data Source | Unadjusted HR | PS Matching HR | PS Stratification HR | 
-|--------------|--------------|--------------|--------------|
-| OptumEHR | 1.30 (1.19-1.43) | 1.34 (1.16-1.54) | 1.21 (1.09-1.34) | 
-| OptumDod | 1.28 (1.18-1.38) | 1.24 (1.10-1.38) | 1.27 (1.18-1.38) | 
-| VAOMOP | 1.38 (1.27-1.50) | 1.35 (1.19-1.53) | 1.36 (1.23-1.49) | 
-**Table 1. Hazard Ratios for GLP1RA vs. SGLT2i Across Data Sources**
-::::
+\begin{table}[H]
+\centering
+\renewcommand{\tablename}{Table}  % Ensures "Table X." format
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Data Source} & \textbf{Unadjusted HR} & \textbf{PS Matching HR} & \textbf{PS Stratification HR} \\
+\hline
+OptumEHR  & 1.30 (1.19-1.43) & 1.34 (1.16-1.54) & 1.21 (1.09-1.34) \\
+OptumDod  & 1.28 (1.18-1.38) & 1.24 (1.10-1.38) & 1.27 (1.18-1.38) \\
+VAOMOP    & 1.38 (1.27-1.50) & 1.35 (1.19-1.53) & 1.36 (1.23-1.49) \\
+\hline
+\end{tabular}
+\caption{Hazard Ratios for GLP1RA vs. SGLT2i Across Data Sources}  % Caption after the table
+\label{tab:hazard_ratios}
+\end{table}
 
 When adjusting for confounders, the HRs for GLP1RA vs SGLT2i are reduced, but GLP1RA still shows a higher risk of poor glycemic control compared to SGLT2i. The PS matching method shows the greatest reduction in HRs, suggesting that this method is the most effective at reducing bias. The PS stratification method shows the lowest HRs, indicating that some patients switching treatments experience improved glycemic control.
 
-:::: {.tbl-cap}
-**Table 2. Comparison of HR Ranges for On-Treatment (OT) vs. Intent-to-Treat (ITT) Analysis**
-::::
-
-| Method | HR Range (OT) | HR Range (ITT) | 
-|----------------|----------------|----------------|
-| Unadjusted | 1.28 - 1.38 | 1.17 - 1.20 | 
-| PS Matching | 1.24 - 1.35 | 1.14 - 1.23 | 
-| PS Stratification | 1.21 - 1.36 | 1.08 - 1.20 |
-
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Method} & \textbf{HR Range (OT)} & \textbf{HR Range (ITT)} \\
+\hline
+Unadjusted        & 1.28 - 1.38   & 1.17 - 1.20    \\
+PS Matching       & 1.24 - 1.35   & 1.14 - 1.23    \\
+PS Stratification & 1.21 - 1.36   & 1.08 - 1.20    \\
+\hline
+\end{tabular}
+\captionsetup{justification=centering}  % Ensures center alignment
+\caption{Comparison of HR Ranges for On-Treatment (OT) \\ vs. Intent-to-Treat (ITT) Analysis}
+\label{tab:hr_ranges}
+\end{table}
 
 # References
 
 ::: {#refs}
 :::
 
-
 # Appendix
 
-```{=latex}
 \begin{table}[H]
 \centering
 \resizebox{\textwidth}{!}{%
@@ -85,6 +103,5 @@ PS stratification, intent-to-treat & VAOMOP & 1.20 & 1.11 & 1.29 & 0.00 & 1.15 &
 \end{tabular}%
 }
 \caption{Hazard Ratios for Various Treatment Groups}
-\label{tab:hazard_ratios}
+\label{tab:full_hazard_ratios}
 \end{table}
-```
