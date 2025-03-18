@@ -6,7 +6,9 @@ format:
   pdf:
     include-in-header:
       text: |
-        \usepackage[toc,page]{Appendix}
+        \usepackage[toc,page]{appendix}
+        \usepackage{multirow}
+        \usepackage{float}
   html:
     toc: true
 editor: visual
@@ -29,7 +31,21 @@ In order to investigate the efficacy of adding either an SGLT-2 inhibitor or a G
 -   DPP4 inhibitors: alogliptin, linagliptin, saxagliptin, sitagliptin, vildagliptin
 -   Sulfonylureas: chlorpropamide, glimepiride, glipizide, gliquidone, glyburide, tolazamide, tolbutamide
 
-We will focus on the SGLT2 inhibitors and GLP1 receptor agonists comparators with an outcome of glycemic control, which is defined as the proportion of patients with HbA1c < 7% or greater than 53 millimole per mole. I decided to use OptumEHR, OptumDod and VAOMOP as the target data sources for patients with no prior metformin exposure to compare glycemic control across unadjusted, propensity score (PS) matching and PS stratification methods and time at risk for intent to treat and on-treatment analyses. The full results shown in the index table.
+We will focus on the GLP1 receptor agonists and SGLT2 inhibitors comparators with an outcome of interest of glycemic control. This outcome is defined as the proportion of patients with HbA1c $<$ 7% or $<$ 53 millimole per mole. I decided to use OptumEHR, OptumDod and VAOMOP as the target data sources for patients with no prior metformin exposure to compare glycemic control across unadjusted, propensity score (PS) matching and PS stratification methods and time at risk for intent to treat and on-treatment analyses.
+
+# Attrition
+
+As shown in Figure \ref{fig:ps_strat_attrition_OptumEHR}, the initial sample size for the OptumEHR data set on treatment was 16,515 patients for GLP1RA (target) and 14,231 patients for SGLT2i (comparator). After the restriction to common period criteria, the sample size was reduced by 332 patients for the target group. We further restricted our sample to patients with no prior metformin exposure, which reduced the sample size in our target group by 8,649 and in our comparator group by 6,667. The final sample size for the OptumEHR dataset was 7,534 patients for GLP1RA and 7,564 patients for SGLT2i. 
+
+Similarly shown in Figure \ref{fig:ps_strat_attrition_VA}, the initial sample size for the VAOMOP data set on treatment  was 10,473 patients for target and 51,666 patients for comparator. After the restriction to common period criteria, the sample size was reduced by 58 patients for the target group and 6 patients for the comparator group. Further restricting our sample to patients with no prior metformin exposure, reduced the sample size in our target group by 7,710 and in our comparator group by 41,931. The final sample size for the VAOMOP dataset was 2,705 patients for GLP1RA and 9,729 patients for SGLT2i. 
+
+# Population Characteristics
+
+The population characteristics of the patients in the OptumEHR dataset before and after propensity score adjustment for on treatment are shown in Table \ref{tab:population_characteristics}. Prior to adjustment it was shown that the GLP1RA group had a higher proportion of younger patients than the SGLT2i group while older patients, age 75 and above, were more likely to be given SGLT2i. Also, women in this group were predominantly recipients of GLP1RA. After adjustment, the age distribution was more balanced between the two groups, making comparisons more reliable.
+
+# HR
+
+The full results of the table are shown in Table \ref{tab:full_hazard_ratios}.
 
 When comparing the hazard ratios (HR) for GLP1RA vs SGLT2i across data sources, we find that GLP1RA has a higher risk of poor glycemic control compared to SGLT2i.
 
@@ -67,12 +83,39 @@ PS Stratification & 1.21 - 1.36   & 1.08 - 1.20    \\
 \label{tab:hr_ranges}
 \end{table}
 
+# Propensity Score
+
+The propensity score (PS) distribution for the OptumEHR dataset is shown in Figure \ref{fig:preference_score_distribution_optumEHR}. The PS distribution for the GLP1RA and SGLT2i groups is similar and shows a fair degree of overlap, indicating that the two groups are comparable.
+
+The PS distribution for the VAOMOP dataset is shown in Figure \ref{fig:preference_score_distribution_vaomop}. The PS distribution for the GLP1RA and SGLT2i groups shows a strong separation, indicating that the two groups are not comparable. With this bimodal distribution there is a strong indication that patients we strongly predicted to have one drug over the other. 
+
+# Kaplan-Meier Curves
+
+The Kaplan-Meier curves for the OptumEHR dataset are shown in Figure \ref{fig:KM_OptumEHR}. The curves show that the GLP1RA group has a higher risk of poor glycemic control compared to the SGLT2i group.
+
 # References
 
 ::: {#refs}
 :::
 
-# Appendix
+\appendix
+\section{Appendix}
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/PS-Strat-ont-Attrition-OptumEHR.png}
+    \caption{Attrition after PS stratification (on-treatment1) - OptumEHR}
+    \label{fig:ps_strat_attrition_OptumEHR}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/PS-Strat-ont-Attrition-VA.png}
+    \caption{Attrition after PS stratification (on-treatment1) - VAOMOP}
+    \label{fig:ps_strat_attrition_VA}
+\end{figure}
+
 
 \begin{table}[H]
 \centering
@@ -105,3 +148,341 @@ PS stratification, intent-to-treat & VAOMOP & 1.20 & 1.11 & 1.29 & 0.00 & 1.15 &
 \caption{Hazard Ratios for Various Treatment Groups}
 \label{tab:full_hazard_ratios}
 \end{table}
+\begin{table}[H]
+\centering
+\caption{Select characteristics before and after propensity score adjustment, showing the (weighted) percentage of subjects with the characteristics in the target (\textit{GLP1RA main no-met}) and comparator (\textit{SGLT2i main no-met}) group, as well as the standardized difference of the means for PS stratification, on-treatment1 OptumEHR.}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|l|c|c|c|c|c|c|}
+\hline
+\multirow{2}{*}{\textbf{Characteristic}} & \multicolumn{3}{c|}{\textbf{Before PS Adjustment}} & \multicolumn{3}{c|}{\textbf{After PS Adjustment}} \\
+\cline{2-7}
+& \textbf{Target} & \textbf{Comparator} & \textbf{Std. diff} & \textbf{Target} & \textbf{Comparator} & \textbf{Std. diff} \\
+\hline
+\textbf{Age group} & & & & & & \\
+15 - 19 & 0.1 & 0.0 & 0.04 & <0.1 & <0.1 & 0.02 \\
+20 - 24 & 0.4 & 0.2 & 0.04 & 0.4 & 0.4 & 0.00 \\
+25 - 29 & 1.1 & 0.6 & 0.06 & 1.0 & 0.7 & 0.03 \\
+30 - 34 & 2.6 & 1.3 & 0.09 & 1.8 & 2.0 & -0.01 \\
+35 - 39 & 5.3 & 2.8 & 0.11 & 5.0 & 3.3 & 0.05 \\
+40 - 44 & 7.3 & 4.6 & 0.11 & 6.6 & 5.0 & 0.03 \\
+45 - 49 & 10.8 & 7.6 & 0.11 & 9.9 & 10.0 & 0.00 \\
+50 - 54 & 14.2 & 12.2 & 0.06 & 13.3 & 13.1 & -0.01 \\
+55 - 59 & 16.3 & 14.7 & -0.04 & 15.4 & 15.3 & 0.00 \\
+60 - 64 & 15.5 & 16.7 & -0.04 & 15.0 & 16.3 & -0.05 \\
+65 - 69 & 12.1 & 13.6 & -0.04 & 13.2 & 13.7 & -0.01 \\
+70 - 74 & 8.3 & 10.5 & -0.07 & 10.3 & 10.3 & 0.00 \\
+75 - 79 & 4.4 & 7.4 & -0.17 & 5.9 & 5.4 & 0.02 \\
+80 - 84 & 1.7 & 4.6 & -0.22 & 3.3 & 3.3 & 0.00 \\
+85 - 89 & 0.4 & 1.5 & -0.17 & 1.3 & 0.9 & -0.03 \\
+\hline
+\textbf{Gender: female} & 64.2 & 46.6 & -0.26 & 55.0 & 57.3 & -0.05 \\
+\hline
+\textbf{Race} & & & & & & \\
+Asian & 1.5 & 2.6 & -0.08 & 2.1 & 2.2 & -0.01 \\
+Black or African American & 15.1 & 13.5 & 0.04 & 13.7 & 13.7 & 0.00 \\
+White & 75.7 & 75.7 & 0.00 & 74.6 & 74.3 & 0.01 \\
+\hline
+\textbf{Ethnicity} & & & & & & \\
+Hispanic or Latino & 5.4 & 5.1 & 0.02 & 5.4 & 6.1 & -0.03 \\
+Not Hispanic or Latino & 80.0 & 79.5 & 0.01 & 77.8 & 76.6 & 0.03 \\
+\hline
+\textbf{Medical history: General} & & & & & & \\
+Diabetes mellitus & 75.4 & 75.3 & 0.00 & 72.9 & 73.7 & -0.02 \\
+Obesity & 39.1 & 24.5 & 0.31 & 20.1 & 26.1 & -0.15 \\
+\hline
+\textbf{Medical history: Cardiovascular disease} & & & & & & \\
+Atrial fibrillation & 4.2 & 11.0 & -0.26 & 4.5 & 5.2 & -0.03 \\
+Cerebrovascular disease & 2.3 & 4.3 & -0.11 & 2.6 & 2.2 & 0.02 \\
+Coronary arteriosclerosis & 9.1 & 20.8 & -0.34 & 11.6 & 11.1 & 0.01 \\
+Heart disease & 20.2 & 35.9 & -0.31 & 22.2 & 21.5 & 0.02 \\
+Heart failure & 4.2 & 16.7 & -0.42 & 6.3 & 6.5 & -0.01 \\
+Ischemic heart disease & 4.3 & 11.7 & -0.28 & 4.8 & 5.5 & -0.03 \\
+Peripheral vascular disease & 4.8 & 7.3 & -0.13 & 4.6 & 4.6 & 0.00 \\
+Pulmonary embolism & 0.8 & 1.0 & -0.03 & 0.6 & 0.6 & 0.00 \\
+Venous thrombosis & 1.0 & 1.3 & -0.03 & 0.7 & 0.9 & -0.02 \\
+\hline
+\end{tabular}%
+}
+\label{tab:population_characteristics}
+\end{table}
+
+
+\begin{figure}[htbp]
+    \hspace*{-2cm} % Adjust as needed
+    \includegraphics[width=1.25\textwidth]{images/PS-target-comparator-strat-ont-optum-ehr.png}
+    \caption{Preference score distribution after PS stratification (on-treatment1) - OptumEHR.}
+    \label{fig:preference_score_distribution_optumEHR}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=3\textwidth]{images/PS-target-comparator-strat-ont-VA.png}
+    \caption{Preference score distribution after PS stratification (on-treatment1) - VAOMOP.}
+    \label{fig:preference_score_distribution_VA}
+\end{figure}
+
+
+\begin{figure}[htbp]
+    \hspace*{-2cm} % Adjust as needed
+    \includegraphics[width=3.5\textwidth]{images/KM-comparator-strat-ont-optum-ehr.png}
+    \caption{Kaplan Meier plot after PS stratification (on-treatment1) - OptumEHR.}
+    \label{fig:KM_OptumEHR}
+\end{figure}
+
+
+
+<!-- ![Attrition_PS stratification_on-treatment1_OptumEHR](images/PS-Strat-ont-Attrition-OptumEHR.png){width="700"} -->
+
+<!-- \raggedright -->
+
+<!-- \begin{table}[ht] -->
+
+<!-- \centering -->
+
+<!-- \caption{Select characteristics before and after propensity score adjustment, showing the (weighted) percentage of subjects with the characteristics in the target (\textit{GLP1RA main no-met}) and comparator (\textit{SGLT2i main no-met}) group, as well as the standardized difference of the means for PS stratification, on-treatment1   OptumEHR.} -->
+
+<!-- \resizebox{\textwidth}{!}{% -->
+
+<!-- \begin{tabular}{|l|c|c|c|c|c|c|} -->
+
+<!-- \hline -->
+
+<!-- \multirow{2}{*}{\textbf{Characteristic}} & \multicolumn{3}{c|}{\textbf{Before PS Adjustment}} & \multicolumn{3}{c|}{\textbf{After PS Adjustment}} \\ -->
+
+<!-- \cline{2-7} -->
+
+<!-- & \textbf{Target} & \textbf{Comparator} & \textbf{Std. diff} & \textbf{Target} & \textbf{Comparator} & \textbf{Std. diff} \\ -->
+
+<!-- \hline -->
+
+<!-- \textbf{Age group} & & & & & & \\ -->
+
+<!-- 15 - 19 & 0.1 & 0.0 & 0.04 & <0.1 & <0.1 & 0.02 \\ -->
+
+<!-- 20 - 24 & 0.4 & 0.2 & 0.04 & 0.4 & 0.4 & 0.00 \\ -->
+
+<!-- 25 - 29 & 1.1 & 0.6 & 0.06 & 1.0 & 0.7 & 0.03 \\ -->
+
+<!-- 30 - 34 & 2.6 & 1.3 & 0.09 & 1.8 & 2.0 & -0.01 \\ -->
+
+<!-- 35 - 39 & 5.3 & 2.8 & 0.11 & 5.0 & 3.3 & 0.05 \\ -->
+
+<!-- 40 - 44 & 7.3 & 4.6 & 0.11 & 6.6 & 5.0 & 0.03 \\ -->
+
+<!-- 45 - 49 & 10.8 & 7.6 & 0.11 & 9.9 & 10.0 & 0.00 \\ -->
+
+<!-- 50 - 54 & 14.2 & 12.2 & 0.06 & 13.3 & 13.1 & -0.01 \\ -->
+
+<!-- 55 - 59 & 16.3 & 14.7 & -0.04 & 15.4 & 15.3 & 0.00 \\ -->
+
+<!-- 60 - 64 & 15.5 & 16.7 & -0.04 & 15.0 & 16.3 & -0.05 \\ -->
+
+<!-- 65 - 69 & 12.1 & 13.6 & -0.04 & 13.2 & 13.7 & -0.01 \\ -->
+
+<!-- 70 - 74 & 8.3 & 10.5 & -0.07 & 10.3 & 10.3 & 0.00 \\ -->
+
+<!-- 75 - 79 & 4.4 & 7.4 & -0.17 & 5.9 & 5.4 & 0.02 \\ -->
+
+<!-- 80 - 84 & 1.7 & 4.6 & -0.22 & 3.3 & 3.3 & 0.00 \\ -->
+
+<!-- 85 - 89 & 0.4 & 1.5 & -0.17 & 1.3 & 0.9 & -0.03 \\ -->
+
+<!-- \hline -->
+
+<!-- \textbf{Gender} & & & & & & \\ -->
+
+<!-- Female & 64.2 & 46.6 & 0.35 & 55.0 & 57.3 & -0.05 \\ -->
+
+<!-- \hline -->
+
+<!-- \textbf{Race} & & & & & & \\ -->
+
+<!-- Asian & 1.5 & 2.6 & -0.08 & 2.1 & 2.2 & -0.01 \\ -->
+
+<!-- Black or African American & 15.1 & 13.5 & 0.04 & 13.7 & 13.7 & 0.00 \\ -->
+
+<!-- White & 75.7 & 75.7 & 0.00 & 74.6 & 74.3 & 0.01 \\ -->
+
+<!-- \hline -->
+
+<!-- \textbf{Ethnicity} & & & & & & \\ -->
+
+<!-- Hispanic or Latino & 5.4 & 5.1 & 0.02 & 5.4 & 6.1 & -0.03 \\ -->
+
+<!-- Not Hispanic or Latino & 80.0 & 79.5 & 0.01 & 77.8 & 76.6 & 0.03 \\ -->
+
+<!-- \hline -->
+
+<!-- \textbf{Medical history: General} & & & & & & \\ -->
+
+<!-- Acute respiratory disease & 12.9 & 12.6 & 0.01 & 7.0 & 7.8 & -0.03 \\ -->
+
+<!-- Attention deficit hyperactivity disorder & 1.5 & 0.7 & 0.08 & 0.8 & 0.7 & 0.02 \\ -->
+
+<!-- Chronic liver disease & 1.5 & 2.1 & -0.05 & 1.4 & 1.5 & 0.00 \\ -->
+
+<!-- Chronic obstructive lung disease & 5.2 & 7.9 & -0.11 & 4.9 & 5.3 & -0.01 \\ -->
+
+<!-- Crohn's disease & 0.4 & 0.3 & 0.03 & 0.3 & 0.3 & -0.01 \\ -->
+
+<!-- Dementia & 0.4 & 0.9 & -0.06 & 0.5 & 0.4 & 0.00 \\ -->
+
+<!-- Depressive disorder & 16.1 & 11.3 & 0.13 & 9.9 & 10.3 & -0.01 \\ -->
+
+<!-- Diabetes mellitus & 75.4 & 75.3 & 0.00 & 72.9 & 73.7 & -0.02 \\ -->
+
+<!-- Gastroesophageal reflux disease & 16.2 & 15.1 & 0.03 & 10.8 & 11.7 & -0.02 \\ -->
+
+<!-- Gastrointestinal hemorrhage & 1.4 & 1.9 & -0.04 & 1.0 & 1.1 & 0.00 \\ -->
+
+<!-- Human immunodeficiency virus infection & 0.4 & 0.4 & 0.00 & 0.3 & 0.3 & 0.00 \\ -->
+
+<!-- Hyperlipidemia & 49.3 & 54.0 & -0.09 & 39.6 & 39.7 & 0.00 \\ -->
+
+<!-- Hypertensive disorder & 54.9 & 58.4 & -0.07 & 47.3 & 48.1 & -0.02 \\ -->
+
+<!-- Lesion of liver & 0.9 & 1.3 & -0.03 & 1.0 & 1.0 & 0.01 \\ -->
+
+<!-- Obesity & 39.1 & 24.5 & 0.31 & 20.1 & 26.1 & -0.15 \\ -->
+
+<!-- Osteoarthritis & 17.1 & 15.4 & 0.05 & 11.0 & 11.6 & -0.02 \\ -->
+
+<!-- Pneumonia & 1.9 & 3.1 & -0.08 & 1.5 & 1.5 & 0.00 \\ -->
+
+<!-- Psoriasis & 1.4 & 1.1 & 0.02 & 0.8 & 1.0 & -0.01 \\ -->
+
+<!-- Renal impairment & 8.5 & 14.2 & -0.18 & 8.5 & 7.3 & -0.05 \\ -->
+
+<!-- Rheumatoid arthritis & 1.5 & 1.4 & 0.01 & 1.3 & 1.2 & 0.00 \\ -->
+
+<!-- Schizophrenia & 0.1 & 0.3 & -0.04 & 0.1 & 0.3 & -0.02 \\ -->
+
+<!-- Ulcerative colitis & 0.2 & 0.4 & -0.03 & 0.2 & 0.3 & 0.00 \\ -->
+
+<!-- Urinary tract infectious disease & 4.1 & 3.3 & 0.04 & 2.8 & 2.6 & 0.00 \\ -->
+
+<!-- Viral hepatitis C & 0.4 & 0.6 & -0.03 & 0.4 & 0.6 & -0.01 \\ -->
+
+<!-- \hline -->
+
+<!-- \textbf{Medical history: Cardiovascular disease} & & & & & & \\ -->
+
+<!-- Atrial fibrillation & 4.2 & 11.0 & -0.26 & 4.5 & 5.2 & -0.03 \\ -->
+
+<!-- Cerebrovascular disease & 2.3 & 4.3 & -0.11 & 2.6 & 2.2 & 0.02 \\ -->
+
+<!-- Coronary arteriosclerosis & 9.1 & 20.8 & -0.34 & 11.6 & 11.1 & 0.01 \\ -->
+
+<!-- Heart disease & 20.2 & 35.9 & -0.31 & 22.2 & 21.5 & 0.02 \\ -->
+
+<!-- Heart failure & 4.2 & 16.7 & -0.42 & 6.3 & 6.5 & -0.01 \\ -->
+
+<!-- Ischemic heart disease & 4.3 & 11.7 & -0.28 & 4.8 & 5.5 & -0.03 \\ -->
+
+<!-- Peripheral vascular disease & 4.8 & 7.3 & -0.13 & 4.6 & 4.6 & 0.00 \\ -->
+
+<!-- Pulmonary embolism & 0.8 & 1.0 & -0.03 & 0.6 & 0.6 & 0.00 \\ -->
+
+<!-- Venous thrombosis & 1.0 & 1.3 & -0.03 & 0.7 & 0.9 & -0.02 \\ -->
+
+<!-- \hline -->
+
+<!-- \hline -->
+
+<!-- \end{tabular}% -->
+
+<!-- } -->
+
+<!-- \label{tab:ps_combined} -->
+
+<!-- \end{table} -->
+
+<!-- \begin{table}[ht] -->
+
+<!-- \centering -->
+
+<!-- \caption{Cont. Select characteristics before and after propensity score adjustment, showing the (weighted) percentage of subjects with the characteristics in the target (\textit{GLP1RA main no-met}) and comparator (\textit{SGLT2i main no-met}) group, as well as the standardized difference of the means for PS stratification, on-treatment1   OptumEHR.} -->
+
+<!-- \resizebox{\textwidth}{!}{% -->
+
+<!-- \begin{tabular}{|l|c|c|c|c|c|c|} -->
+
+<!-- \hline -->
+
+<!-- \multirow{2}{*}{\textbf{Characteristic}} & \multicolumn{3}{c|}{\textbf{Before PS Adjustment}} & \multicolumn{3}{c|}{\textbf{After PS Adjustment}} \\ -->
+
+<!-- \cline{2-7} -->
+
+<!-- & \textbf{Target} & \textbf{Comparator} & \textbf{Std. diff} & \textbf{Target} & \textbf{Comparator} & \textbf{Std. diff} \\ -->
+
+<!-- \hline -->
+
+<!-- \textbf{Medical history: Neoplasms} & & & & & & \\ -->
+
+<!-- Malignant lymphoma & 0.3 & 0.5 & -0.02 & 0.3 & 0.4 & -0.01 \\ -->
+
+<!-- Malignant neoplasm of anorectum & 0.1 & 0.1 & 0.00 & 0.1 & 0.1 & 0.00 \\ -->
+
+<!-- Malignant neoplastic disease & 5.7 & 6.7 & 0.01 & 4.9 & 4.7 & 0.01 \\ -->
+
+<!-- Malignant tumor of breast & 1.3 & 1.1 & 0.02 & 0.9 & 1.0 & -0.01 \\ -->
+
+<!-- Malignant tumor of colon & 0.2 & 0.3 & -0.03 & 0.2 & 0.3 & -0.02 \\ -->
+
+<!-- Malignant tumor of lung & 0.2 & 0.4 & 0.04 & 0.2 & 0.4 & -0.04 \\ -->
+
+<!-- Malignant tumor of urinary bladder & 0.1 & 0.3 & -0.03 & 0.1 & 0.1 & 0.02 \\ -->
+
+<!-- Primary malignant neoplasm of prostate & 0.7 & 1.1 & -0.04 & 0.6 & 0.6 & 0.00 \\ -->
+
+<!-- \hline -->
+
+<!-- \textbf{Medication use} & & & & & & \\ -->
+
+<!-- Agents acting on the renin-angiotensin system & 43.1 & 52.0 & -0.18 & 41.7 & 40.5 & 0.03 \\ -->
+
+<!-- Antibacterials for systemic use & 33.5 & 30.7 & 0.06 & 22.7 & 23.7 & -0.02 \\ -->
+
+<!-- Antidepressants & 33.9 & 25.4 & 0.18 & 24.7 & 26.8 & -0.06 \\ -->
+
+<!-- Antiepileptics & 20.5 & 17.0 & 0.09 & 17.2 & 18.0 & -0.02 \\ -->
+
+<!-- Anti-inflammatory and antirheumatic products & 42.7 & 44.3 & -0.03 & 36.5 & 36.7 & -0.01 \\ -->
+
+<!-- Antineoplastic agents & 5.8 & 4.3 & 0.07 & 3.7 & 4.0 & -0.03 \\ -->
+
+<!-- Antipsoriatics & 1.7 & 1.1 & 0.05 & 1.2 & 0.7 & 0.04 \\ -->
+
+<!-- Antithrombotic agents & 27.0 & 40.2 & -0.23 & 29.4 & 28.3 & 0.02 \\ -->
+
+<!-- Beta blocking agents & 27.4 & 39.4 & -0.26 & 27.2 & 26.4 & 0.02 \\ -->
+
+<!-- Calcium channel blockers & 18.7 & 21.8 & -0.08 & 15.2 & 15.2 & 0.00 \\ -->
+
+<!-- Diuretics & 33.8 & 38.0 & -0.11 & 28.5 & 28.7 & -0.02 \\ -->
+
+<!-- Drugs for acid related disorders & 38.7 & 38.8 & 0.00 & 31.3 & 33.1 & -0.04 \\ -->
+
+<!-- Drugs for obstructive airway diseases & 37.7 & 34.8 & 0.06 & 29.9 & 29.3 & -0.04 \\ -->
+
+<!-- Drugs used in diabetes & 2.8 & 2.9 & 0.00 & 3.3 & 3.3 & 0.00 \\ -->
+
+<!-- Immunosuppressants & 4.0 & 2.9 & 0.06 & 2.9 & 2.9 & 0.00 \\ -->
+
+<!-- Lipid modifying agents & 45.4 & 55.6 & -0.20 & 43.9 & 43.8 & 0.00 \\ -->
+
+<!-- Opioids & 22.0 & 23.5 & -0.03 & 19.7 & 19.5 & 0.00 \\ -->
+
+<!-- Psycholeptics & 27.3 & 22.6 & 0.05 & 22.7 & 23.7 & -0.03 \\ -->
+
+<!-- Psychostimulants, agents used for ADHD & 5.0 & 3.0 & 0.10 & 3.3 & 3.3 & 0.00 \\ -->
+
+<!-- \hline -->
+
+<!-- \end{tabular}% -->
+
+<!-- } -->
+
+<!-- \label{tab:ps_combined} -->
+
+<!-- \end{table} -->
