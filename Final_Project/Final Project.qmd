@@ -3,6 +3,7 @@ title: "Final Project Abstract"
 subtitle: "Due Date: 03/21/2025 at 11:59PM"
 author: "Adolfo Jacobo 006333111"
 format:
+  docx: default  
   pdf:
     include-in-header:
       text: |
@@ -20,7 +21,7 @@ csl: apa-6th-edition.csl  # Optional: Specify citation style
 
 Chronic diseases, like diabetes, are some of the major causes of mortality in the world with the prevalence and cost of these diseases only continues to rise @Hacker2024. The Centers for Disease Control and Prevention (CDC) estimates that in the US alone, 34.2 million people have diabetes, with 29.7 million people diagnosed with the condition and 8.7 million continue to be undiagnosed @CDC_Diabetes_Data. As of 2024, the American College of Physicians has issued new guidelines for first line pharmacologic treatments for type 2 diabetes. The new recommendations are adding sodium–glucose cotransporter-2 (SGLT-2) inhibitor or glucagon-like peptide-1 (GLP-1) agonist to metformin and lifestyle modifications @doi:10.7326/M23-2788. These recommendations may stem from systematic analyses which show glycemic control decline after 2010 with gaps in treatment particularly seen among younger adults, Mexican Americans, and uninsured individuals, who are already at higher risk for diabetes complications @doi:10.1056/NEJMsa2032271.
 
-In a cohort of patients newly diagnosed with type 2 diabetes, we aim to compare the efficacy of the recommended treatment strategies: adding either an SGLT-2 inhibitor or a GLP-1 agonist. ~~A control group will include patients treated solely with metformin and lifestyle interventions, ranging from ages 18 years or older.~~ The analysis will be stratified by ethnicity and age groups to assess the differential effectiveness of these interventions on glycemic control, body weight, cardiovascular risk factors, and cardiovascular outcomes over a one-year follow-up period. ~~Additionally, treatment pathways will be analyzed to identify common sequences of therapy modifications and persistence rates across different patient subgroups.~~
+In a cohort of patients ~~newly~~ diagnosed with type 2 diabetes, we aim to compare the efficacy of the recommended treatment strategies: adding either an SGLT-2 inhibitor or a GLP-1 agonist. ~~A control group will include patients treated solely with metformin and lifestyle interventions, ranging from ages 18 years or older.~~ The analysis will be stratified by ethnicity and age groups to assess the differential effectiveness of these interventions on glycemic control, body weight, cardiovascular risk factors, and cardiovascular outcomes over a one-year follow-up period. ~~Additionally, treatment pathways will be analyzed to identify common sequences of therapy modifications and persistence rates across different patient subgroups.~~
 
 # Introduction
 
@@ -87,7 +88,7 @@ PS Stratification & 1.21 - 1.36   & 1.08 - 1.20    \\
 
 The propensity score (PS) distribution for the OptumEHR dataset is shown in Figure \ref{fig:preference_score_distribution_optumEHR}. The PS distribution for the GLP1RA and SGLT2i groups is similar and shows a fair degree of overlap, indicating that the two groups are comparable.
 
-The PS distribution for the VAOMOP dataset is shown in Figure \ref{fig:preference_score_distribution_vaomop}. The PS distribution for the GLP1RA and SGLT2i groups shows a strong separation, indicating that the two groups are not comparable. With this bimodal distribution there is a strong indication that patients we strongly predicted to have one drug over the other. 
+The PS distribution for the VAOMOP dataset is shown in Figure \ref{fig:preference_score_distribution_VA}. The PS distribution for the GLP1RA and SGLT2i groups shows a strong separation, indicating that the two groups are not comparable. With this bimodal distribution there is a strong indication that patients we strongly predicted to have one drug over the other. 
 
 # Kaplan-Meier Curves
 
@@ -119,6 +120,7 @@ The Kaplan-Meier curves for the OptumEHR dataset are shown in Figure \ref{fig:KM
 
 \begin{table}[H]
 \centering
+\caption{Hazard Ratios for Various Treatment Groups}
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{|l|l|c|c|c|c|c|c|c|c|}
 \hline
@@ -145,9 +147,10 @@ PS stratification, intent-to-treat & VAOMOP & 1.20 & 1.11 & 1.29 & 0.00 & 1.15 &
 \hline
 \end{tabular}%
 }
-\caption{Hazard Ratios for Various Treatment Groups}
 \label{tab:full_hazard_ratios}
 \end{table}
+
+
 \begin{table}[H]
 \centering
 \caption{Select characteristics before and after propensity score adjustment, showing the (weighted) percentage of subjects with the characteristics in the target (\textit{GLP1RA main no-met}) and comparator (\textit{SGLT2i main no-met}) group, as well as the standardized difference of the means for PS stratification, on-treatment1 OptumEHR.}
