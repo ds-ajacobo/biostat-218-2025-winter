@@ -1,5 +1,5 @@
 ---
-title: "Final Project"
+title: "Comparing the Effects of GLP1RA versus SGLT2i on Glycemic Control as a Front-Line Treatment on Type Two Diabetes"
 subtitle: "Due Date: 03/21/2025 at 11:59PM"
 author: "Adolfo Jacobo 006333111"
 format:
@@ -20,11 +20,11 @@ csl: apa-6th-edition.csl  # Optional: Specify citation style
 
 Chronic diseases, like diabetes, are some of the major causes of mortality in the world with the prevalence and cost of these diseases only continues to rise @Hacker2024. The Centers for Disease Control and Prevention (CDC) estimates that in the US alone, 34.2 million people have diabetes, with 29.7 million people diagnosed with the condition and 8.7 million continue to be undiagnosed @CDC_Diabetes_Data. As of 2024, the American College of Physicians has issued new guidelines for first line pharmacologic treatments for type 2 diabetes. The new recommendations are adding sodium–glucose cotransporter-2 (SGLT-2) inhibitor or glucagon-like peptide-1 (GLP-1) agonist to metformin and lifestyle modifications @doi:10.7326/M23-2788. These recommendations may stem from systematic analyses which show glycemic control decline after 2010 with gaps in treatment particularly seen among younger adults, Mexican Americans, and uninsured individuals, who are already at higher risk for diabetes complications @doi:10.1056/NEJMsa2032271.
 
-In a cohort of patients ~~newly~~ diagnosed with type 2 diabetes, we aim to compare the efficacy of the recommended treatment strategies: adding either an SGLT-2 inhibitor or a GLP-1 agonist. ~~A control group will include patients treated solely with metformin and lifestyle interventions, ranging from ages 18 years or older.~~ The analysis will be stratified by ethnicity and age groups to assess the differential effectiveness of these interventions on glycemic control, body weight, cardiovascular risk factors, and cardiovascular outcomes over a one-year follow-up period. ~~Additionally, treatment pathways will be analyzed to identify common sequences of therapy modifications and persistence rates across different patient subgroups.~~
+The aim of this study is “determine real-world comparative effectiveness and safety of traditionally second-line Type 2 diabetes mellitus (T2DM) agents using health information encompassing millions of patients with T2DM, with a focus on individuals at moderate cardiovascular risk and other key subgroups.” In a cohort of patients diagnosed with type 2 diabetes, we aim to compare the efficacy of the recommended treatment strategies: adding either an SGLT-2 inhibitor or a GLP-1 agonist. The analysis will be stratified by ethnicity and age groups to assess the differential effectiveness of these interventions on glycemic control, body weight, cardiovascular risk factors, and cardiovascular outcomes over a one-year follow-up period. Advancements in T2D diabetes treatments including GLP-1’ and SGLT-2 offer a broader range of treatment options in managing glucose homeostasis and improving the overall management of T2D. More research is needed in long-term disease management and treatment outcomes.
 
 # Introduction
 
-In order to investigate the efficacy of adding either an SGLT-2 inhibitor or a GLP-1 agonist as a treatment course for patients with diabetes type 2, we will use the **LEGEND-T2DM Class Sensitivity Evidence Explorer** a shiny tool created during the observational health study *Large-scale evidence generation and evaluation across a network of databases for type 2 diabetes mellitus (LEGEND-T2DM): a protocol for a series of multinational, real-world comparative cardiovascular effectiveness and safety studies* @article. The aim of this study is "determine real-world comparative effectiveness and safety of traditionally second-line Type 2 diabetes mellitus (T2DM) agents using health information encompassing millions of patients with T2DM, with a focus on individuals at moderate cardiovascular risk and other key subgroups." They used the comparators of:
+To investigate the efficacy of adding either an SGLT-2 inhibitor or a GLP-1 agonist as a treatment course for patients with diabetes type 2, we will use the **LEGEND-T2DM Class Sensitivity Evidence Explorer** a shiny tool created during the observational health study *Large-scale evidence generation and evaluation across a network of databases for type 2 diabetes mellitus (LEGEND-T2DM): a protocol for a series of multinational, real-world comparative cardiovascular effectiveness and safety studies* @article. The aim of this study is "determine real-world comparative effectiveness and safety of traditionally second-line Type 2 diabetes mellitus (T2DM) agents using health information encompassing millions of patients with T2DM, with a focus on individuals at moderate cardiovascular risk and other key subgroups." They used the comparators of:
 
 -   SGLT2 inhibitors: canagliflozin, dapagliflozin, empagliflozin, ertugliflozin
 -   GLP1 receptor agonists: albiglutide, dulaglutide, exenatide, liraglutide, lixisenatide, semaglutide
@@ -33,7 +33,7 @@ In order to investigate the efficacy of adding either an SGLT-2 inhibitor or a G
 
 We will focus on the GLP1 receptor agonists and SGLT2 inhibitors comparators with an outcome of interest of glycemic control. The glycemic control outcome is defined as the proportion of patients with HbA1c greater than 7% or greater than 53 units millimole per mole. We will use OptumEHR and VAOMOP as the data sources for patients with no prior metformin exposure to compare glycemic control across unadjusted, propensity score (PS) matching and PS stratification methods and time at risk for intent to treat and on-treatment analyses.
 
-# Attrition
+# Cohort Selection
 
 As shown in Figure \ref{fig:ps_strat_attrition_OptumEHR}, the initial sample size for the OptumEHR data set on treatment and stratified was 16,515 patients for GLP1RA (target) and 14,231 patients for SGLT2i (comparator). After the restriction to common period criteria, the sample size was reduced by 332 patients for the target group. We further restricted our sample to patients with no prior metformin exposure, which reduced the sample size in our target group by 8,649 and in our comparator group by 6,667. The final sample size for the OptumEHR dataset was 7,534 patients for GLP1RA and 7,564 patients for SGLT2i.
 
@@ -47,16 +47,15 @@ The population characteristics of the patients in the OptumEHR dataset before an
 
 The population characteristics of the patients in the VAOMOP dataset before and after propensity score adjustment for on treatment are shown in Table \ref{tab:population_characteristics_VAOMOP}. Prior to adjustment, the GLP1RA group had a lower proportion of younger patients than the SGLT2i group while older patients, age 75 and above, had a higher proportion. There was also a notable difference in the proportion of patients with a history of diabetes and obesity. After adjustment, the age distribution was more balanced between the two groups, making comparisons more reliable. However, the GLP1RA group still had a higher proportion of patients with a history of diabetes and obesity.
 
-# Propensity Score
+# Preference Score
 
-The propensity score (PS) distribution for the OptumEHR dataset is shown in Figure \ref{fig:preference_score_distribution_optumEHR}. The PS distribution for the GLP1RA and SGLT2i groups is similar and shows a fair degree of overlap, indicating that the two groups are comparable.
+The preference score (PS) distribution for the OptumEHR dataset is shown in Figure \ref{fig:preference_score_distribution_optumEHR}. The figure shows two density plots with GLP1RA group shown in red while SGLT2i shown in blue. The target group has a preference score of about 0.55 to 1 indicating that these patients exhibited characteristics that would favor the use of GLP1RA. While the comparator group has the lower preference score of about 0 of 0.45. The PS distribution for the GLP1RA and SGLT2i groups is similar and illustrates a fair degree of overlap, indicating that the two groups are comparable. The overlap of this group occurs between the range of 0.45 to 0.55. In this area, the two groups are the most comparable. The are where the overlap occurs in the figure indicates that patients in this dataset were just as likely to be prescribed GLP1RA as they were to be prescribed SGLT2i.
 
-The PS distribution for the VAOMOP dataset is shown in Figure \ref{fig:preference_score_distribution_VA}. The PS distribution for the GLP1RA and SGLT2i groups shows a strong separation, indicating that the two groups are not comparable. With this bimodal distribution there is a strong indication that patients we strongly predicted to have one drug over the other.
+The PS distribution for the VAOMOP dataset is shown in Figure \ref{fig:preference_score_distribution_VA}. As with the previous figure, the GLP1RA group shown in red while SGLT2i shown in blue. The target group has a preference score closer to 1 indicating that these patients show a strong probability of receiving GLP1RA. Conversely, in the comparator group has the lower preference score closer to 0 showing a strong probability of receiving STGL2i. The PS distribution for the GLP1RA and SGLT2i groups illustrates a strong separation, indicating that the two groups are not comparable. With this bimodal distribution there is a strong indication that patients we strongly predicted to have been prescribed one drug over the other.
 
 # Hazard Ratios for Glycemic Control
 
-The LEGEND-T2DM Class Sensitivity Evidence Explorer tool was used to calculate the hazard ratios (HR) for GLP1RA vs SGLT2i across data sources for the outcome of glycemic control. The full results are shown in Table \ref{tab:full_hazard_ratios}. When comparing the hazard ratios (HR) for target group vs the comparator group, we find that GLP1RA has a higher risk of poor glycemic control compared to SGLT2i. Table \ref{tab:hazard_ratios} shows the summary of the hazard ratios. The unadjusted HRs for GLP1RA vs SGLT2i are 1.30 - 1.38, indicating that GLP1RA has a higher risk of poor glycemic control compared to SGLT2i. Using a matching methodology to adjust for confounders, the HRs are reduced but still show a higher risk of poor glycemic control for GLP1RA compared to SGLT2i. The PS stratification method shows the lowest HRs. Using the different methodologies, we can see that the PS stratification method is the most effective at reducing bias. However, across all methods, GLP1RA still shows a higher risk of poor glycemic control compared to SGLT2i.
-
+The LEGEND-T2DM Class Sensitivity Evidence Explorer tool was used to calculate the hazard ratios (HR) for GLP1RA vs SGLT2i across data sources for the outcome of glycemic control. The full results are shown in Table \ref{tab:full_hazard_ratios}. When comparing the hazard ratios (HR) for target group vs the comparator group, we find that GLP1RA has a higher risk of poor glycemic control compared to SGLT2i. Table \ref{tab:hazard_ratios} illustrates the summary of the hazard ratios. The unadjusted HRs for GLP1RA vs SGLT2i are 1.30 - 1.38, indicating that GLP1RA has a higher risk of poor glycemic control compared to SGLT2i. Using a matching methodology to adjust for confounders, the HRs are reduced but still show a higher risk of poor glycemic control for GLP1RA compared to SGLT2i. The PS stratification method illustrates the lowest HRs. Using the different methodologies, we can see that the PS stratification method is the most effective at reducing bias. However, across all methods, GLP1RA still demonstrates a higher risk of poor glycemic control compared to SGLT2i.
 
 \begin{table}[H]
 \centering
@@ -74,10 +73,9 @@ VAOMOP    & 1.38 (1.27-1.50) & 1.35 (1.19-1.53) & 1.36 (1.23-1.49) \\
 \label{tab:hazard_ratios}
 \end{table}
 
-
 # Kaplan-Meier Curves
 
-The Kaplan-Meier curves for the OptumEHR dataset are shown in Figure \ref{fig:KM_OptumEHR}. The curves show that the GLP1RA group has a higher risk of poor glycemic control compared to the SGLT2i group. Over time, the curves diverge, indicating that the GLP1RA group has a higher risk of poor glycemic control compared to the SGLT2i group. Furthermore, after 150 days the plot shows that the number of patients in the target group is only 50% of the number of patients in the comparator group. The divergence of the curves over time and the difference in the number of patients in each group indicate that there is a real statistical difference between the two groups.
+The Kaplan-Meier curves for the OptumEHR dataset are shown in Figure \ref{fig:KM_OptumEHR}. The curves illustrates that the GLP1RA group has a higher risk of poor glycemic control compared to the SGLT2i group. Over time, the curves diverge, indicating that the GLP1RA group has a higher risk of poor glycemic control compared to the SGLT2i group. Furthermore, after 150 days the plot shows that the number of patients in the target group is only 50% of the number of patients in the comparator group. The divergence of the curves over time and the difference in the number of patients in each group indicate that there is a significant statistical difference between the two groups.
 
 # Conclusion
 
@@ -96,6 +94,8 @@ The Legend-TD2M study has provided artifacts that can be used to provide robust 
     \caption{Attrition after PS stratification (on-treatment1) - OptumEHR}
     \label{fig:ps_strat_attrition_OptumEHR}
 \end{figure}
+
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{images/PS-Strat-ont-Attrition-VA.png}
@@ -133,8 +133,6 @@ PS stratification, intent-to-treat & VAOMOP & 1.20 & 1.11 & 1.29 & 0.00 & 1.15 &
 }
 \label{tab:full_hazard_ratios}
 \end{table}
-
-
 \begin{table}[H]
 \centering
 \caption{Select characteristics before and after propensity score adjustment, showing the (weighted) percentage of subjects with the characteristics in the target (\textit{GLP1RA main no-met}) and comparator (\textit{SGLT2i main no-met}) group, as well as the standardized difference of the means for PS stratification, on-treatment1 OptumEHR.}
@@ -194,8 +192,6 @@ Venous thrombosis & 1.0 & 1.3 & -0.03 & 0.7 & 0.9 & -0.02 \\
 }
 \label{tab:population_characteristics_OptumEHR}
 \end{table}
-
-
 \begin{table}[H]
 \centering
 \caption{Select characteristics before and after propensity score adjustment, showing the (weighted) percentage of subjects with the characteristics in the target (\textit{GLP1RA main no-met}) and comparator (\textit{SGLT2i main no-met}) group, as well as the standardized difference of the means for PS stratification, on-treatment1 VAOMOP.}
@@ -257,10 +253,6 @@ Venous thrombosis & 0.9 & 1.9 & -0.07 & <0.3 & 0.4 & -0.02 \\
 }
 \label{tab:population_characteristics_VA}
 \end{table}
-
-
-
-
 \begin{figure}[htbp]
     \hspace*{-2cm} % Adjust as needed
     \includegraphics[width=1.25\textwidth]{images/PS-target-comparator-strat-ont-optum-ehr.png}
